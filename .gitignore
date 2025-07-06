@@ -1,0 +1,16 @@
+
+# Ignore input/output data
+/data/
+/output/
+/*.log
+
+# Ignore Conda environments and temp files
+.env/
+/work/
+/.nextflow*
+*.conda
+
+# OS files
+.DS_Store
+
+
