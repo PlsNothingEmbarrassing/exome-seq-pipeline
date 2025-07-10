@@ -1,4 +1,5 @@
 process trim_reads {
+    // 
     tag "$sample_id"
 
     input:
@@ -19,19 +20,56 @@ process trim_reads {
     """
 }
 
+process fastqc {
+    // Use FASTQC to quality control trimmed sequences
+    tag "$sample_id"
 
+    input:
+    tuple val(sample_id), path(read1), path(read2)
+
+    output:
+    path("*_fastqc.*")
+
+    script:
+    """
+    module load FastQC/0.11.8
+
+    fastqc $read1 $read2
+    """
+}
+
+process mapping {
+    tag "$sample_id"
+
+    input:
+    tuple val(sample_id), path(read1), path(read2)
+
+    output:
+    path("*.sam")
+
+    script:
+    """
+    module load bwa/0.7.17
+
+    bwa mem data/reference.fa $read1 $read2 > ${sample_id}.sam
+    """
+}
 
 
 workflow {
+    // Read in pair-ended fastq files
     reads_ch = Channel.fromFilePairs("data/fastq/*_R{1,2}.slim.fastq.gz")
-
+    // Map files into correct tuple format for process
     trimmed_reads = reads_ch.map { sample_id, reads -> 
         tuple(sample_id, reads[0], reads[1])
-    }
-
-    trimmed_reads.view { it }
-
-    trimmed_output = trim_reads(trimmed_reads)
+    }   
+    // Pass data to trimming process
+    trimmed_output = trim_reads(trimmed_reads)    
 
     trimmed_output.view { it }
+    // Pass trimmed data to fastqc
+    fastqc_output = fastqc(trimmed_output)
+
+    // Map trimmed data to reference genome
+    mapped_data = mapping(trimmed_output)
 }
