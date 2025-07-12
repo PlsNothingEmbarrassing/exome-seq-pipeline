@@ -51,7 +51,7 @@ process mapping {
     """
     module load bwa/0.7.17
 
-    bwa mem data/reference.fa $read1 $read2 > ${sample_id}.sam
+    bwa mem /home/c.c24082291/DISSERTATION/exome-workflow-proj/data/reference.fa $read1 $read2 > ${sample_id}.sam
     """
 }
 
