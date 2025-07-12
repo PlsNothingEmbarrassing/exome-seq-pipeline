@@ -45,7 +45,7 @@ process mapping {
     tuple val(sample_id), path(read1), path(read2)
 
     output:
-    path("*.sam")
+    tuple val(sample_id), path("${sample_id}.sam")
 
     script:
     """
@@ -55,6 +55,23 @@ process mapping {
     """
 }
 
+process make_bam{
+    tag "$sample_id"
+
+    input:
+    tuple val(sample_id), path(samfile)
+
+    output:
+    tuple val(sample_id), path("${sample_id}.sorted.bam")
+
+    script:
+    """
+    module load samtools/1.17
+
+    samtools view -bS $samfile > ${sample_id}.bam
+    samtools sort -o ${sample_id}.sorted.bam ${sample_id}.bam
+    """
+}
 
 workflow {
     // Read in pair-ended fastq files
@@ -64,12 +81,15 @@ workflow {
         tuple(sample_id, reads[0], reads[1])
     }   
     // Pass data to trimming process
-    trimmed_output = trim_reads(trimmed_reads)    
+    trimmed_output = trim_reads(trimmed_reads)
 
-    trimmed_output.view { it }
     // Pass trimmed data to fastqc
     fastqc_output = fastqc(trimmed_output)
 
     // Map trimmed data to reference genome
     mapped_data = mapping(trimmed_output)
+
+    mapped_data.view {it}
+    // Make BAM file
+    bam_file = make_bam(mapped_data)
 }
