@@ -12,7 +12,6 @@ process trim_reads {
     script:
     """
     java -jar /apps/genomics/trimmomatic/0.39/trimmomatic-0.39.jar PE -phred33 \
-    -threads 4 \
     $read1 $read2 \
     ${sample_id}_trimmed_R1.fastq.gz ${sample_id}_unpaired_R1.fastq.gz \
     ${sample_id}_trimmed_R2.fastq.gz ${sample_id}_unpaired_R2.fastq.gz \
@@ -73,6 +72,43 @@ process make_bam{
     """
 }
 
+process mark_duplicates {
+    tag "$sample_id"
+
+    input:
+    tuple val(sample_id), path(bamfile)
+
+    output:
+    tuple val(sample_id), path("${sample_id}.sorted.markdup.bam"), path("${sample_id}.sorted.metrics")
+
+    script:
+    """
+    module load java/1.8
+    module load picard/2.27.5
+
+    java -jar \$PICARD MarkDuplicates \
+    I=$bamfile O=${sample_id}.sorted.markdup.bam \
+    M=${sample_id}.sorted.metrics REMOVE_DUPLICATES=false
+    """
+}
+
+process bamstats {
+    tag "$sample_id"
+
+    input:
+    tuple val(sample_id), path(markdup_file), path(_)
+
+    output:
+    tuple val(sample_id), path("${sample_id}.sorted.markdup.stats")
+
+    script:
+    """
+    module load bamtools/170119
+
+    bamtools stats -in $markdup_file > ${sample_id}.sorted.markdup.stats
+    """
+}
+
 workflow {
     // Read in pair-ended fastq files
     reads_ch = Channel.fromFilePairs("data/fastq/*_R{1,2}.slim.fastq.gz")
@@ -89,7 +125,12 @@ workflow {
     // Map trimmed data to reference genome
     mapped_data = mapping(trimmed_output)
 
-    mapped_data.view {it}
     // Make BAM file
     bam_file = make_bam(mapped_data)
+
+    // Mark duplicates
+    markdup_files = mark_duplicates(bam_file)
+    
+    // Create bamstats report
+    bamstats_report = bamstats(markdup_files)
 }
