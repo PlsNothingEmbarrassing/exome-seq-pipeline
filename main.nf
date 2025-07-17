@@ -109,6 +109,40 @@ process bamstats {
     """
 }
 
+process index_bam {
+    tag "$sample_id"
+
+    input:
+    tuple val(sample_id), path(markdup_bamfile), path(_)
+
+    output:
+    tuple val(sample_id), path("${sample_id}.sorted.markdup.bam.bai")
+
+    script:
+    """
+    module load samtools/1.17
+
+    samtools index $markdup_bamfile
+    """
+}
+
+process add_readgroups {
+    tag "sample_id"
+
+    input:
+    tuple val(sample_id), path(markdup_bam), path(_)
+
+    output:
+    tuple val(sample_id), path("${sample_id}.sorted.markup.rg.bam")
+
+    script:
+    """
+    module load picard/2.27.5
+    module load java/1.8
+    java -jar \$PICARD AddOrReplaceReadGroups I=$markdup_bam O=${sample_id}.sorted.markup.rg.bam SO=coordinate RGID=1 RGLB=libl RGPL=illumina RGPU=unit1 RGSM=${sample_id} CREATE_INDEX=True
+    """
+}
+
 workflow {
     // Read in pair-ended fastq files
     reads_ch = Channel.fromFilePairs("data/fastq/*_R{1,2}.slim.fastq.gz")
@@ -133,4 +167,10 @@ workflow {
     
     // Create bamstats report
     bamstats_report = bamstats(markdup_files)
+
+    // Index sample BAM file
+    indexed_bam = index_bam(markdup_files)
+
+    // Add readgroups to BAM file
+    bam_with_readgroups = add_readgroups(markdup_files)
 }
