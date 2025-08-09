@@ -1,3 +1,18 @@
+
+params.reference_data_url = 'ftp://ftp.ensembl.org/pub/release-109/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz'
+params.reference_name = 'Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz'
+params.reference_dir  = 'data'
+params.index_dir = 'indexed_data_files'
+
+
+/* derive names at compile time (so we can use them in output globs) */
+// def refGz   = params.reference_name
+// def refFa   = refGz.replaceAll(/\.gz$/, '') // .fa files
+// def refBase = refFa.replaceAll(/\.fa$/, '') // basename files w no extension
+// Channel
+//     .value(params.reference_data_name)
+//     .set { reference_file_ch }
+
 process trim_reads {
     // 
     tag "$sample_id"
@@ -143,6 +158,52 @@ process add_readgroups {
     """
 }
 
+process index_reference {
+    tag "$sample_id"
+
+    input:
+    path reference_genome
+
+    output:
+    tuple val(sample_id), path(indexed_reference)
+    
+    script:
+    """   
+    module load GATK/4.1.2.0    
+    
+    samtools faidx /home/c.c24082291/DISSERTATION/exome-workflow-proj/data/reference.fa
+    """
+
+}
+
+process download_var_reference {
+    tag "Download variant reference panel"
+    
+    output:
+    path 'Mills_and_1000G_gold_standard.indels.hg38.vcf.gz', emit: var_reference_gz
+
+    script:
+    """
+    wget https://storage.googleapis.com/genomics-public-data/resources/broad/hg38/v0/Mills_and_1000G_gold_standard.indels.hg38.vcf.gz
+    """
+
+}
+
+process index_variant_file {
+    tag "Index variant reference panel"
+
+    input:
+    path var_reference_gz
+
+    output:
+    path '*.tbi', emit: indexed_var_reference
+
+    """
+    module load GATK/4.1.2.0
+    gatk IndexFeatureFile -F $var_reference_gz
+    """
+}
+
 workflow {
     // Read in pair-ended fastq files
     reads_ch = Channel.fromFilePairs("data/fastq/*_R{1,2}.slim.fastq.gz")
@@ -173,4 +234,10 @@ workflow {
 
     // Add readgroups to BAM file
     bam_with_readgroups = add_readgroups(markdup_files)
+
+    // Download variant reference file
+    var_reference_gz = download_var_reference()
+
+    // Index variant reference file
+    indexed_var_reference = index_variant_file(var_reference_gz)
 }
