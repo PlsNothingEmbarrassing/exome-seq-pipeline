@@ -3,6 +3,8 @@
 /data/
 /output/
 /*.log
+/annovar/
+
 
 # Ignore Conda environments and temp files
 .env/
@@ -16,3 +18,4 @@
 
 trace.txt
 timeline.html
+refactored-nf

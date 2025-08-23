@@ -1,56 +1,9 @@
 
 params.reference_data_url = 'ftp://ftp.ensembl.org/pub/release-109/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz'
-params.reference_name = 'Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz'
-params.reference_dir  = 'data'
-params.index_dir = 'indexed_data_files'
-params.out_dir = "/home/c.c24082291/DISSERTATION/exome-workflow-proj/output"
+//params.fasta = 'Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz'
+params.fasta = 'chr22.fa'
+params.data_dir  = '/home/c.c24082291/DISSERTATION/exome-workflow-proj/data'
 
-process download_reference {
-    tag "Download reference genome"
-
-    output:
-    path 'Homo_sapiens.GRCh38.dna_sm.primary_assembly.fa', emit: reference_genome
-
-    script:
-    """
-    wget "https://ftp.ensembl.org/pub/current_fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna_sm.primary_assembly.fa.gz"
-
-    gunzip Homo_sapiens.GRCh38.dna_sm.primary_assembly.fa.gz
-    """
-}
-
-process extract_chr22 {
-    tag "Extract chr22 from reference genome"
-
-    input:
-    path reference_genome
-
-    output:
-    path "chr22.fa", emit: chr22_fasta
-
-    script:
-    """
-    module load samtools/1.17    
-    samtools faidx $reference_genome 22 > chr22.fa
-    sed -i 's/^>22/>chr22/' chr22.fa
-    """
-}
-
-process index_ref_bwa {
-    tag "Index reference genome"
-
-    input:
-    path reference_genome
-
-    output:  
-    tuple path(reference_genome), path("${reference_genome}.*"), emit: ref_index_bundle
-
-    script:
-    """
-    module load bwa/0.7.17
-    bwa index -a bwtsw $reference_genome
-    """
-}
 
 
 process trim_reads {
@@ -95,7 +48,7 @@ process mapping {
     tag "$sample_id"
 
     input:
-    tuple val(sample_id), path(read1), path(read2), path(reference_genome), path(reference_files)
+    tuple val(sample_id), path(read1), path(read2)
 
     output:
     tuple val(sample_id), path("${sample_id}.sam")
@@ -103,7 +56,7 @@ process mapping {
     script:
     """
     module load bwa/0.7.17
-    bwa mem ${reference_genome} $read1 $read2 > ${sample_id}.sam
+    bwa mem ${params.data_dir}/${params.fasta} $read1 $read2 > ${sample_id}.sam
     """
 }
 
@@ -319,20 +272,6 @@ process call_variants {
     """
 }
 
-process download_variant_array {
-    tag "Download 1000 genome vcf"
-    input:    
-
-    output:
-    tuple path("*.vcf"), path("*.vcf.idx"), emit: variant_array
-
-    script:
-    """
-    wget https://storage.googleapis.com/genomics-public-data/resources/broad/hg38/v0/1000G.phase3.integrated.sites_only.no_MATCHED_REV.hg38.vcf
-    wget https://storage.googleapis.com/genomics-public-data/resources/broad/hg38/v0/1000G.phase3.integrated.sites_only.no_MATCHED_REV.hg38.vcf.idx
-    """
-}
-
 process index_variant_file_2 {
     tag "$sample_id"
 
@@ -365,30 +304,14 @@ process remove_indels {
     """
 }
 
-process index_snp_vcf {
+process filter_variants {
     tag "$sample_id"
 
     input:
     tuple val(sample_id), path(snp_vcf), path(vcf_file), path(indexed_vcf)
 
     output:
-    tuple val(sample_id), path(snp_vcf), path('*.tbi'), emit: indexed_snp_vcf
-
-    script:
-    """
-    module load GATK/4.1.2.0
-    gatk IndexFeatureFile -F $snp_vcf
-    """
-}
-
-process filter_variants {
-    tag "$sample_id"
-
-    input:
-    tuple val(sample_id), path(snp_vcf), path(indexed_snp_vcf)
-
-    output:
-    tuple val(sample_id), path("*.snp.filtered.vcf.gz"), path(snp_vcf), path(indexed_snp_vcf)
+    tuple val(sample_id), path("*.snp.filtered.vcf.gz"), path(vcf_file), path(indexed_vcf)
 
     script:
     """
@@ -398,8 +321,22 @@ process filter_variants {
     """
 }
 
+process refine_genotypes {
+    tag "$sample_id"
 
+    input:
+    tuple val(sample_id), path(filtered_vcf), path(filtered_indexed_vcf), path(thousand_genome_vcf), path(thousand_genome_vcf_idx)
 
+    output:
+    tuple val(sample_id), path("*.snp.filtered.ref.vcf.gz")
+
+    script:
+    """
+    module load GATK/4.1.2.0
+    module load java/1.8
+    gatk --java-options "-Xmx4g" CalculateGenotypePosteriors -V $filtered_vcf -O ${sample_id}.snp.filtered.ref.vcf.gz -supporting $thousand_genome_vcf
+    """
+}
 
 process index_vcf {
     tag "$sample_id"
@@ -416,61 +353,6 @@ process index_vcf {
     """
 }
 
-
-//// GOT TO HERE YESTERDAY: FIX THOSE INPUTS AND OUTPUTS
-process refine_genotypes {
-    tag "$sample_id"
-
-    input:
-    tuple val(sample_id), path(snp_vcf), path(indexed_snp_vcf), path(thousand_genome_vcf), path(thousand_genome_vcf_idx)
-
-    output:
-    tuple val(sample_id), path("*.snp.filtered.ref.vcf.gz"), path(thousand_genome_vcf), path(thousand_genome_vcf_idx), emit: refined_vcf
-
-    script:
-    """
-    module load GATK/4.1.2.0
-    module load java/1.8
-    gatk --java-options "-Xmx4g" CalculateGenotypePosteriors -V $snp_vcf -O ${sample_id}.snp.filtered.ref.vcf.gz -supporting $thousand_genome_vcf
-    """
-}
-
-
-process annotate_variants {
-    tag "$sample_id"
-
-    input:
-    tuple val(sample_id), path(refined_vcf_file), path(thousand_genome_vcf), path(thousand_genome_vcf_idx)
-
-    output:
-    path "*.hg38_multianno.txt"
-    path "*.hg38_multianno.vcf"
-
-    publishDir params.out_dir, mode: 'copy', overwrite: true
-
-    script:
-    """
-    module load annovar/20210525
-
-    # Convert VCF to ANNOVAR input format
-    /home/c.c24082291/DISSERTATION/exome-workflow-proj/annovar/convert2annovar.pl -format vcf4 ${refined_vcf_file} > ${refined_vcf_file.baseName}.avinput
-
-    # Annotate variants using ANNOVAR
-    /home/c.c24082291/DISSERTATION/exome-workflow-proj/annovar/table_annovar.pl \
-        ${refined_vcf_file} \
-        /home/c.c24082291/DISSERTATION/exome-workflow-proj/annovar/humandb \
-        -buildver hg38 \
-        -out ${refined_vcf_file.baseName} \
-        -remove \
-        -protocol refGene,cytoBand,avsnp150,clinvar_20210501 \
-        -operation g,r,f,f \
-        -nastring . \
-        -vcfinput
-        
-
-    """
-}
-
 workflow {
     // Read in pair-ended fastq files
     reads_ch = Channel.fromFilePairs("data/fastq/*_R{1,2}.slim.fastq.gz")
@@ -478,14 +360,6 @@ workflow {
     trimmed_reads = reads_ch.map { sample_id, reads -> 
         tuple(sample_id, reads[0], reads[1])
     }
-
-    // Download reference genome
-    reference_genome = download_reference()
-
-    // Download variant array
-    thousand_genome_vcf = download_variant_array()
-
-    chr22_fasta = extract_chr22(reference_genome)
 
     // Index reference genome
     indexed_reference = index_ref_bwa(chr22_fasta)
@@ -552,19 +426,19 @@ workflow {
     // Filter variants
     // Remove indels
     snp_vcf = remove_indels(indexed_vcf)
-    // Index SNP VCF
-    indexed_snp_vcf = index_snp_vcf(snp_vcf) // .snp.vcf.gz and index file
 
-    filtered_variants = filter_variants(indexed_snp_vcf) // .snp.filtered.vcf.gz    
+    filtered_variants = filter_variants(snp_vcf) // .snp.filtered.vcf.gz
 
     indexed_filtered_vcf = index_vcf(filtered_variants) // .snp.filtered.vcf.gz and index file
 
+    thousand_genome_vcf.view { it }
+
     // Refine genotypes
-    refining_inputs = indexed_filtered_vcf.combine(thousand_genome_vcf)
+    refining_inputs = indexed_filtered_vcf.combine(thousand_genome_vcf)  
     
     refined_vcf = refine_genotypes(refining_inputs)
 
-    annotate_variants = annotate_variants(refined_vcf)
+
     
 
 }
