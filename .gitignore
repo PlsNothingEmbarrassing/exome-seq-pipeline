@@ -4,7 +4,8 @@
 /output/
 /*.log
 /annovar/
-
+/configs/
+/modules/
 
 # Ignore Conda environments and temp files
 .env/
@@ -19,3 +20,6 @@
 trace.txt
 timeline.html
 refactored-nf
+ERR166333.slim*
+*sh
+*.dot
