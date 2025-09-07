@@ -1,0 +1,33 @@
+# environment.yml
+name: exome
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  # Core toolchain
+  - bwa=0.7.17
+  - samtools=1.17
+  - bcftools=1.17
+  - htslib=1.17
+  - FastQC=0.11.8        
+  - bedtools=2.30.0
+  - bamtools=2.5.2
+  - picard=2.27.5
+  - trimmomatic=0.39
+  - gatk4=4.1.2.0       
+  - openjdk=8
+  - perl                 
+  - python=3.10
+  - pip
+  - gawk              
+  - coreutils
+  - grep
+  - sed
+  - wget
+  - curl
+  - pigz
+  - unzip
+  - procps-ng
+  - pip:
+      - multiqc==1.25.1
+    
