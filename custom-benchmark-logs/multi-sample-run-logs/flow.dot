@@ -1,0 +1,102 @@
+digraph "flow" {
+v0 [shape=point,label="",fixedsize=true,width=0.1,xlabel="Channel.fromList"];
+v1 [shape=circle,label="",fixedsize=true,width=0.1,xlabel="map"];
+v0 -> v1;
+
+v1 [shape=circle,label="",fixedsize=true,width=0.1,xlabel="map"];
+v2 [label="trim_reads"];
+v1 -> v2 [label="reads_ch"];
+
+v2 [label="trim_reads"];
+v3 [label="fastqc"];
+v2 -> v3;
+
+v3 [label="fastqc"];
+v4 [shape=point];
+v3 -> v4;
+
+v2 [label="trim_reads"];
+v5 [label="mapping"];
+v2 -> v5;
+
+v5 [label="mapping"];
+v6 [label="make_bam"];
+v5 -> v6;
+
+v6 [label="make_bam"];
+v7 [label="mark_duplicates"];
+v6 -> v7;
+
+v7 [label="mark_duplicates"];
+v8 [label="bamstats"];
+v7 -> v8;
+
+v8 [label="bamstats"];
+v9 [shape=point];
+v8 -> v9;
+
+v7 [label="mark_duplicates"];
+v10 [label="index_bam"];
+v7 -> v10;
+
+v10 [label="index_bam"];
+v11 [shape=point];
+v10 -> v11;
+
+v7 [label="mark_duplicates"];
+v12 [label="add_readgroups"];
+v7 -> v12;
+
+v12 [label="add_readgroups"];
+v13 [label="create_recalibration_model"];
+v12 -> v13;
+
+v13 [label="create_recalibration_model"];
+v14 [label="recalibrate_bam"];
+v13 -> v14;
+
+v14 [label="recalibrate_bam"];
+v15 [label="index_bam_2"];
+v14 -> v15;
+
+v15 [label="index_bam_2"];
+v16 [label="call_variants"];
+v15 -> v16;
+
+v16 [label="call_variants"];
+v17 [label="index_variant_file_2"];
+v16 -> v17;
+
+v17 [label="index_variant_file_2"];
+v18 [label="remove_indels"];
+v17 -> v18;
+
+v18 [label="remove_indels"];
+v19 [label="index_snp_vcf"];
+v18 -> v19;
+
+v19 [label="index_snp_vcf"];
+v20 [label="filter_variants"];
+v19 -> v20;
+
+v20 [label="filter_variants"];
+v21 [label="index_vcf"];
+v20 -> v21;
+
+v21 [label="index_vcf"];
+v22 [label="refine_genotypes"];
+v21 -> v22;
+
+v22 [label="refine_genotypes"];
+v23 [label="annotate_variants"];
+v22 -> v23;
+
+v23 [label="annotate_variants"];
+v25 [shape=point];
+v23 -> v25;
+
+v23 [label="annotate_variants"];
+v24 [shape=point];
+v23 -> v24;
+
+}

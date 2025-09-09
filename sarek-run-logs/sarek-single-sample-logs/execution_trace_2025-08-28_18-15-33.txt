@@ -1,0 +1,2 @@
+task_id	hash	native_id	name	status	exit	submit	duration	realtime	%cpu	peak_rss	peak_vmem	rchar	wchar
+17	33/c0d893	-	NFCORE_SAREK:SAREK:FASTP (Sample1-Lane1)	FAILED	1	-	-	-	-	-	-	-	-

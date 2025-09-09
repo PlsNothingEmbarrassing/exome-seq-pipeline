@@ -1,0 +1,1254 @@
+<!--
+  ~ Copyright 2013-2024, Seqera Labs
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<html>
+<head>
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
+</head>
+<body>
+<pre class="mermaid" style="text-align: center;">
+flowchart TB
+    subgraph " "
+    v0["Channel.fromPath"]
+    v6["Channel.fromPath"]
+    v9["Channel.fromPath"]
+    v11["Channel.fromPath"]
+    v14["Channel.fromPath"]
+    v16["Channel.fromPath"]
+    v18["Channel.fromPath"]
+    v20["Channel.fromPath"]
+    v23["Channel.fromPath"]
+    v25["Channel.fromPath"]
+    v30["Channel.fromList"]
+    v50[" "]
+    v78["Channel.fromPath"]
+    v85["Channel.fromPath"]
+    v92["Channel.fromPath"]
+    v99["Channel.fromPath"]
+    v106["Channel.fromPath"]
+    v151["Channel.fromPath"]
+    v154["Channel.fromPath"]
+    v157["Channel.fromPath"]
+    v160["Channel.fromPath"]
+    v164["Channel.fromPath"]
+    v168["Channel.fromPath"]
+    v170["Channel.fromPath"]
+    v173["Channel.fromPath"]
+    v175["Channel.fromPath"]
+    v177["Channel.fromPath"]
+    v195["Channel.fromPath"]
+    v197["intervals"]
+    v198["nucleotides_per_second"]
+    v239["write_one_fastq_gz"]
+    v244["write_one_fastq_gz"]
+    v248["write_one_fastq_gz"]
+    v255[" "]
+    v256["qname"]
+    v265[" "]
+    v266["qname"]
+    v275[" "]
+    v276["qname"]
+    v285[" "]
+    v286["qname"]
+    v298[" "]
+    v299[" "]
+    v304[" "]
+    v305["interleave"]
+    v310[" "]
+    v311["interleave"]
+    v336["adapter_fasta"]
+    v337["discard_trimmed_pass"]
+    v338["save_trimmed_fail"]
+    v339["save_merged"]
+    v357[" "]
+    v358["sort_bam"]
+    v363[" "]
+    v364["sort_bam"]
+    v370[" "]
+    v371["sort_bam"]
+    v422["intervals"]
+    v568["ngscheckmate_bed"]
+    v575["save_mpileup"]
+    v657[" "]
+    v658[" "]
+    v692["architecture"]
+    v693["weights"]
+    v741[" "]
+    v742[" "]
+    v743[" "]
+    v744[" "]
+    v745[" "]
+    v747["diff_variant_file"]
+    v810["diff_variant_file"]
+    v874["diff_variant_file"]
+    v964["Channel.of"]
+    v967["Channel.fromPath"]
+    v970["ch_workflow_summary"]
+    v975["ch_methods_description"]
+    v982["replace_names"]
+    v983["sample_names"]
+    end
+    subgraph " "
+    v8["cf_chrom_len"]
+    v13["fasta_fai"]
+    v22["mappability"]
+    v27["sentieon_dnascope_model"]
+    v39[" "]
+    v42[" "]
+    v52[" "]
+    v53[" "]
+    v57[" "]
+    v61[" "]
+    v65[" "]
+    v69[" "]
+    v73[" "]
+    v77[" "]
+    v83["allele_files"]
+    v90["loci_files"]
+    v97["gc_file"]
+    v104["rt_file"]
+    v108["chr_files"]
+    v123["bcftools_annotations_tbi"]
+    v125["bwa"]
+    v127["bwamem2"]
+    v129["hashtable"]
+    v132["dbsnp_tbi"]
+    v134["dict"]
+    v136["fasta_fai"]
+    v139["germline_resource_tbi"]
+    v142["known_snps_tbi"]
+    v145["known_indels_tbi"]
+    v147["msisensorpro_scan"]
+    v150["pon_tbi"]
+    v163["bwamem2"]
+    v167["dragmap"]
+    v172["germline_resource_tbi"]
+    v179["panel_of_normals_tbi"]
+    v212[" "]
+    v219[" "]
+    v225["intervals_bed_gz_tbi_combined"]
+    v228["intervals_bed_gz_tbi"]
+    v231["versions"]
+    v241[" "]
+    v246[" "]
+    v250[" "]
+    v258[" "]
+    v259[" "]
+    v260[" "]
+    v261[" "]
+    v262[" "]
+    v263[" "]
+    v264[" "]
+    v268[" "]
+    v269[" "]
+    v270[" "]
+    v271[" "]
+    v272[" "]
+    v273[" "]
+    v274[" "]
+    v278[" "]
+    v279[" "]
+    v280[" "]
+    v281[" "]
+    v282[" "]
+    v283[" "]
+    v284[" "]
+    v288[" "]
+    v289[" "]
+    v290[" "]
+    v291[" "]
+    v292[" "]
+    v293[" "]
+    v294[" "]
+    v301[" "]
+    v302[" "]
+    v303[" "]
+    v307[" "]
+    v308[" "]
+    v309[" "]
+    v313[" "]
+    v314[" "]
+    v315[" "]
+    v331[" "]
+    v341[" "]
+    v342[" "]
+    v343[" "]
+    v360[" "]
+    v361[" "]
+    v362[" "]
+    v366[" "]
+    v367[" "]
+    v368[" "]
+    v369[" "]
+    v373[" "]
+    v374[" "]
+    v375[" "]
+    v376[" "]
+    v386["reports"]
+    v403["bai_mapped"]
+    v416[" "]
+    v417[" "]
+    v426[" "]
+    v427[" "]
+    v428[" "]
+    v429[" "]
+    v430[" "]
+    v431[" "]
+    v432[" "]
+    v433[" "]
+    v434[" "]
+    v435[" "]
+    v453[" "]
+    v454[" "]
+    v455[" "]
+    v456[" "]
+    v459[" "]
+    v490[" "]
+    v501[" "]
+    v511[" "]
+    v512[" "]
+    v513[" "]
+    v516[" "]
+    v517[" "]
+    v530[" "]
+    v531[" "]
+    v532[" "]
+    v533[" "]
+    v538[" "]
+    v548[" "]
+    v549[" "]
+    v550[" "]
+    v551[" "]
+    v552[" "]
+    v553[" "]
+    v554[" "]
+    v555[" "]
+    v556[" "]
+    v557[" "]
+    v565["reports"]
+    v577[" "]
+    v578[" "]
+    v579[" "]
+    v587[" "]
+    v588["pdf"]
+    v589["all"]
+    v590["matched"]
+    v591["corr_matrix"]
+    v595["versions"]
+    v604["cram"]
+    v607["cram"]
+    v637["gvcf_tbi_intervals"]
+    v642[" "]
+    v660[" "]
+    v661[" "]
+    v662[" "]
+    v665[" "]
+    v666[" "]
+    v668["realigned_bam"]
+    v671["versions"]
+    v698[" "]
+    v705["vcfs"]
+    v749[" "]
+    v750[" "]
+    v751[" "]
+    v752[" "]
+    v753[" "]
+    v754[" "]
+    v755[" "]
+    v756[" "]
+    v757[" "]
+    v758[" "]
+    v759[" "]
+    v760[" "]
+    v761[" "]
+    v762[" "]
+    v763[" "]
+    v764[" "]
+    v765[" "]
+    v766[" "]
+    v767[" "]
+    v768[" "]
+    v769[" "]
+    v770[" "]
+    v771[" "]
+    v772[" "]
+    v773[" "]
+    v774[" "]
+    v775[" "]
+    v776[" "]
+    v777[" "]
+    v778[" "]
+    v779[" "]
+    v780[" "]
+    v781[" "]
+    v782[" "]
+    v783[" "]
+    v784[" "]
+    v785[" "]
+    v786[" "]
+    v787[" "]
+    v788[" "]
+    v789[" "]
+    v790[" "]
+    v791[" "]
+    v792[" "]
+    v793[" "]
+    v794[" "]
+    v795[" "]
+    v796[" "]
+    v797[" "]
+    v798[" "]
+    v799[" "]
+    v800[" "]
+    v801[" "]
+    v802[" "]
+    v803[" "]
+    v804[" "]
+    v805[" "]
+    v806[" "]
+    v807[" "]
+    v808[" "]
+    v809[" "]
+    v812[" "]
+    v813[" "]
+    v814[" "]
+    v815[" "]
+    v816[" "]
+    v817[" "]
+    v818[" "]
+    v819[" "]
+    v820[" "]
+    v821[" "]
+    v822[" "]
+    v823[" "]
+    v824[" "]
+    v825[" "]
+    v826[" "]
+    v827[" "]
+    v828[" "]
+    v829[" "]
+    v830[" "]
+    v831[" "]
+    v832[" "]
+    v833[" "]
+    v834[" "]
+    v835[" "]
+    v836[" "]
+    v837[" "]
+    v838[" "]
+    v839[" "]
+    v840[" "]
+    v841[" "]
+    v842[" "]
+    v843[" "]
+    v844[" "]
+    v845[" "]
+    v846[" "]
+    v847[" "]
+    v848[" "]
+    v849[" "]
+    v850[" "]
+    v851[" "]
+    v852[" "]
+    v853[" "]
+    v854[" "]
+    v855[" "]
+    v856[" "]
+    v857[" "]
+    v858[" "]
+    v859[" "]
+    v860[" "]
+    v861[" "]
+    v862[" "]
+    v863[" "]
+    v864[" "]
+    v865[" "]
+    v866[" "]
+    v867[" "]
+    v868[" "]
+    v869[" "]
+    v870[" "]
+    v871[" "]
+    v872[" "]
+    v873[" "]
+    v876[" "]
+    v877[" "]
+    v878[" "]
+    v879[" "]
+    v880[" "]
+    v881[" "]
+    v882[" "]
+    v883[" "]
+    v884[" "]
+    v885[" "]
+    v886[" "]
+    v887[" "]
+    v888[" "]
+    v889[" "]
+    v890[" "]
+    v891[" "]
+    v892[" "]
+    v893[" "]
+    v894[" "]
+    v895[" "]
+    v896[" "]
+    v897[" "]
+    v898[" "]
+    v899[" "]
+    v900[" "]
+    v901[" "]
+    v902[" "]
+    v903[" "]
+    v904[" "]
+    v905[" "]
+    v906[" "]
+    v907[" "]
+    v908[" "]
+    v909[" "]
+    v910[" "]
+    v911[" "]
+    v912[" "]
+    v913[" "]
+    v914[" "]
+    v915[" "]
+    v916[" "]
+    v917[" "]
+    v918[" "]
+    v919[" "]
+    v920[" "]
+    v921[" "]
+    v922[" "]
+    v923[" "]
+    v924[" "]
+    v925[" "]
+    v926[" "]
+    v927[" "]
+    v928[" "]
+    v929[" "]
+    v930[" "]
+    v931[" "]
+    v932[" "]
+    v933[" "]
+    v934[" "]
+    v935[" "]
+    v936[" "]
+    v937[" "]
+    v953[" "]
+    v985[" "]
+    v986[" "]
+    v987[" "]
+    v990[" "]
+    end
+    subgraph NFCORE_SAREK
+    subgraph PREPARE_GENOME
+    v45([BWAMEM1_INDEX])
+    v46([BWAMEM2_INDEX])
+    v47([DRAGMAP_HASHTABLE])
+    v48([GATK4_CREATESEQUENCEDICTIONARY])
+    v49([MSISENSORPRO_SCAN])
+    v51([SAMTOOLS_FAIDX])
+    v56([TABIX_BCFTOOLS_ANNOTATIONS])
+    v60([TABIX_DBSNP])
+    v64([TABIX_GERMLINE_RESOURCE])
+    v68([TABIX_KNOWN_SNPS])
+    v72([TABIX_KNOWN_INDELS])
+    v76([TABIX_PON])
+    v81([UNZIP_ALLELES])
+    v88([UNZIP_LOCI])
+    v95([UNZIP_GC])
+    v102([UNZIP_RT])
+    v1(( ))
+    v15(( ))
+    v24(( ))
+    v54(( ))
+    v79(( ))
+    v82(( ))
+    v84(( ))
+    v86(( ))
+    v89(( ))
+    v93(( ))
+    v96(( ))
+    v100(( ))
+    v103(( ))
+    v121(( ))
+    v124(( ))
+    v126(( ))
+    v128(( ))
+    v130(( ))
+    v133(( ))
+    v135(( ))
+    v137(( ))
+    v140(( ))
+    v143(( ))
+    v146(( ))
+    v148(( ))
+    end
+    subgraph PREPARE_INTERVALS
+    v199([CREATE_INTERVALS_BED])
+    v211([TABIX_BGZIPTABIX_INTERVAL_SPLIT])
+    v218([TABIX_BGZIPTABIX_INTERVAL_COMBINED])
+    v201(( ))
+    v213(( ))
+    v223(( ))
+    end
+    subgraph SAREK
+    v240([SPRING_DECOMPRESS_TO_FQ_PAIR])
+    v245([SPRING_DECOMPRESS_TO_R1_FQ])
+    v249([SPRING_DECOMPRESS_TO_R2_FQ])
+    subgraph CONVERT_FASTQ_INPUT
+    v257([SAMTOOLS_VIEW_MAP_MAP])
+    v267([SAMTOOLS_VIEW_UNMAP_UNMAP])
+    v277([SAMTOOLS_VIEW_UNMAP_MAP])
+    v287([SAMTOOLS_VIEW_MAP_UNMAP])
+    v300([SAMTOOLS_MERGE_UNMAP])
+    v306([COLLATE_FASTQ_UNMAP])
+    v312([COLLATE_FASTQ_MAP])
+    v318([CAT_FASTQ])
+    v31(( ))
+    v295(( ))
+    v316(( ))
+    end
+    v330([FASTQC])
+    v340([FASTP])
+    subgraph FASTQ_ALIGN_BWAMEM_MEM2_DRAGMAP_SENTIEON
+    v359([BWAMEM1_MEM])
+    v365([BWAMEM2_MEM])
+    v372([DRAGMAP_ALIGN])
+    v377([SENTIEON_BWAMEM])
+    v155(( ))
+    v158(( ))
+    v385(( ))
+    end
+    subgraph BAM_MARKDUPLICATES
+    v415([GATK4_MARKDUPLICATES])
+    subgraph CRAM_QC_MOSDEPTH_SAMTOOLS
+    v421([SAMTOOLS_STATS])
+    v425([MOSDEPTH])
+    end
+    v348(( ))
+    end
+    v452([CRAM_TO_BAM])
+    subgraph BAM_BASERECALIBRATOR
+    v472([GATK4_BASERECALIBRATOR])
+    v476([GATK4_GATHERBQSRREPORTS])
+    end
+    subgraph BAM_APPLYBQSR
+    v500([GATK4_APPLYBQSR])
+    subgraph CRAM_MERGE_INDEX_SAMTOOLS
+    v510([MERGE_CRAM])
+    v515([INDEX_CRAM])
+    end
+    end
+    v529([CRAM_TO_BAM_RECAL])
+    subgraph CRAM_SAMPLEQC
+    subgraph CRAM_QC_RECAL
+    v544([SAMTOOLS_STATS])
+    v547([MOSDEPTH])
+    v558(( ))
+    v561(( ))
+    end
+    subgraph BAM_NGSCHECKMATE
+    v576([BCFTOOLS_MPILEUP])
+    v586([NGSCHECKMATE_NCM])
+    end
+    end
+    subgraph BAM_VARIANT_CALLING_GERMLINE_ALL
+    subgraph BAM_VARIANT_CALLING_HAPLOTYPECALLER
+    v633([GATK4_HAPLOTYPECALLER])
+    v647([MERGE_HAPLOTYPECALLER])
+    subgraph BAM_MERGE_INDEX_SAMTOOLS
+    v659([MERGE_BAM])
+    v664([INDEX_MERGE_BAM])
+    v669(( ))
+    end
+    v10(( ))
+    v152(( ))
+    v169(( ))
+    v643(( ))
+    end
+    subgraph VCF_VARIANT_FILTERING_GATK
+    v694([CNNSCOREVARIANTS])
+    v697([FILTERVARIANTTRANCHES])
+    v196(( ))
+    v699(( ))
+    end
+    end
+    subgraph VCF_QC_BCFTOOLS_VCFTOOLS
+    v746([BCFTOOLS_STATS])
+    v748([VCFTOOLS_TSTV_COUNT])
+    v811([VCFTOOLS_TSTV_QUAL])
+    v875([VCFTOOLS_SUMMARY])
+    end
+    v984([MULTIQC])
+    v979(( ))
+    v980(( ))
+    v981(( ))
+    v988(( ))
+    end
+    end
+    v7(( ))
+    v12(( ))
+    v21(( ))
+    v26(( ))
+    v107(( ))
+    v161(( ))
+    v165(( ))
+    v171(( ))
+    v178(( ))
+    v0 --> v1
+    v6 --> v7
+    v7 --> v8
+    v9 --> v10
+    v11 --> v12
+    v12 --> v13
+    v14 --> v15
+    v16 --> v10
+    v18 --> v10
+    v20 --> v21
+    v21 --> v22
+    v23 --> v24
+    v25 --> v26
+    v26 --> v27
+    v30 --> v31
+    v31 --> v39
+    v31 --> v42
+    v1 --> v45
+    v45 --> v84
+    v45 --> v124
+    v1 --> v46
+    v46 --> v84
+    v46 --> v126
+    v1 --> v47
+    v47 --> v84
+    v47 --> v128
+    v1 --> v48
+    v48 --> v84
+    v48 --> v133
+    v1 --> v49
+    v49 --> v84
+    v49 --> v146
+    v50 --> v51
+    v1 --> v51
+    v51 --> v53
+    v51 --> v52
+    v51 --> v84
+    v51 --> v135
+    v54 --> v56
+    v56 --> v57
+    v56 --> v84
+    v56 --> v121
+    v10 --> v60
+    v60 --> v61
+    v60 --> v84
+    v60 --> v130
+    v15 --> v64
+    v64 --> v65
+    v64 --> v84
+    v64 --> v137
+    v10 --> v68
+    v68 --> v69
+    v68 --> v84
+    v68 --> v140
+    v10 --> v72
+    v72 --> v73
+    v72 --> v84
+    v72 --> v143
+    v24 --> v76
+    v76 --> v77
+    v76 --> v84
+    v76 --> v148
+    v78 --> v79
+    v79 --> v81
+    v81 --> v82
+    v81 --> v84
+    v82 --> v83
+    v85 --> v86
+    v86 --> v88
+    v88 --> v84
+    v88 --> v89
+    v89 --> v90
+    v92 --> v93
+    v93 --> v95
+    v95 --> v84
+    v95 --> v96
+    v96 --> v97
+    v99 --> v100
+    v100 --> v102
+    v102 --> v84
+    v102 --> v103
+    v103 --> v104
+    v106 --> v107
+    v107 --> v108
+    v121 --> v123
+    v124 --> v125
+    v126 --> v127
+    v128 --> v129
+    v130 --> v132
+    v133 --> v134
+    v135 --> v136
+    v137 --> v139
+    v140 --> v142
+    v143 --> v145
+    v146 --> v147
+    v148 --> v150
+    v151 --> v152
+    v154 --> v155
+    v157 --> v158
+    v160 --> v161
+    v161 --> v163
+    v164 --> v165
+    v165 --> v167
+    v168 --> v169
+    v170 --> v171
+    v171 --> v172
+    v173 --> v169
+    v175 --> v169
+    v177 --> v178
+    v178 --> v179
+    v195 --> v196
+    v197 --> v199
+    v198 --> v199
+    v199 --> v84
+    v199 --> v201
+    v201 --> v211
+    v211 --> v212
+    v211 --> v84
+    v211 --> v213
+    v196 --> v218
+    v218 --> v219
+    v218 --> v84
+    v218 --> v223
+    v223 --> v225
+    v213 --> v228
+    v84 --> v231
+    v239 --> v240
+    v31 --> v240
+    v240 --> v241
+    v240 --> v31
+    v244 --> v245
+    v31 --> v245
+    v245 --> v246
+    v245 --> v31
+    v248 --> v249
+    v31 --> v249
+    v249 --> v250
+    v249 --> v31
+    v255 --> v257
+    v256 --> v257
+    v31 --> v257
+    v257 --> v312
+    v257 --> v264
+    v257 --> v263
+    v257 --> v262
+    v257 --> v261
+    v257 --> v260
+    v257 --> v259
+    v257 --> v258
+    v257 --> v201
+    v265 --> v267
+    v266 --> v267
+    v31 --> v267
+    v267 --> v274
+    v267 --> v273
+    v267 --> v272
+    v267 --> v271
+    v267 --> v270
+    v267 --> v269
+    v267 --> v268
+    v267 --> v201
+    v267 --> v295
+    v275 --> v277
+    v276 --> v277
+    v31 --> v277
+    v277 --> v284
+    v277 --> v283
+    v277 --> v282
+    v277 --> v281
+    v277 --> v280
+    v277 --> v279
+    v277 --> v278
+    v277 --> v201
+    v277 --> v295
+    v285 --> v287
+    v286 --> v287
+    v31 --> v287
+    v287 --> v294
+    v287 --> v293
+    v287 --> v292
+    v287 --> v291
+    v287 --> v290
+    v287 --> v289
+    v287 --> v288
+    v287 --> v201
+    v287 --> v295
+    v298 --> v300
+    v299 --> v300
+    v295 --> v300
+    v300 --> v306
+    v300 --> v303
+    v300 --> v302
+    v300 --> v301
+    v300 --> v201
+    v304 --> v306
+    v305 --> v306
+    v306 --> v309
+    v306 --> v308
+    v306 --> v307
+    v306 --> v201
+    v306 --> v316
+    v310 --> v312
+    v311 --> v312
+    v312 --> v315
+    v312 --> v314
+    v312 --> v313
+    v312 --> v201
+    v312 --> v316
+    v316 --> v318
+    v318 --> v31
+    v318 --> v201
+    v31 --> v330
+    v330 --> v331
+    v330 --> v201
+    v336 --> v340
+    v337 --> v340
+    v338 --> v340
+    v339 --> v340
+    v31 --> v340
+    v340 --> v343
+    v340 --> v342
+    v340 --> v341
+    v340 --> v201
+    v340 --> v348
+    v357 --> v359
+    v358 --> v359
+    v158 --> v359
+    v348 --> v359
+    v359 --> v362
+    v359 --> v361
+    v359 --> v360
+    v359 --> v201
+    v359 --> v348
+    v363 --> v365
+    v364 --> v365
+    v158 --> v365
+    v348 --> v365
+    v365 --> v369
+    v365 --> v368
+    v365 --> v367
+    v365 --> v366
+    v365 --> v201
+    v365 --> v348
+    v370 --> v372
+    v371 --> v372
+    v158 --> v372
+    v348 --> v372
+    v372 --> v376
+    v372 --> v375
+    v372 --> v374
+    v372 --> v373
+    v372 --> v201
+    v372 --> v348
+    v372 --> v385
+    v1 --> v377
+    v155 --> v377
+    v158 --> v377
+    v348 --> v377
+    v377 --> v201
+    v377 --> v348
+    v385 --> v386
+    v348 --> v403
+    v1 --> v415
+    v155 --> v415
+    v348 --> v415
+    v415 --> v417
+    v415 --> v416
+    v415 --> v201
+    v1 --> v421
+    v201 --> v421
+    v421 --> v201
+    v422 --> v201
+    v1 --> v425
+    v201 --> v425
+    v425 --> v435
+    v425 --> v434
+    v425 --> v433
+    v425 --> v432
+    v425 --> v431
+    v425 --> v430
+    v425 --> v429
+    v425 --> v428
+    v425 --> v427
+    v425 --> v426
+    v425 --> v201
+    v1 --> v452
+    v155 --> v452
+    v201 --> v452
+    v452 --> v456
+    v452 --> v455
+    v452 --> v454
+    v452 --> v453
+    v452 --> v201
+    v201 --> v459
+    v1 --> v472
+    v10 --> v472
+    v152 --> v472
+    v155 --> v472
+    v169 --> v472
+    v201 --> v472
+    v472 --> v201
+    v201 --> v476
+    v476 --> v201
+    v201 --> v490
+    v1 --> v500
+    v152 --> v500
+    v155 --> v500
+    v201 --> v500
+    v500 --> v501
+    v500 --> v201
+    v1 --> v510
+    v155 --> v510
+    v201 --> v510
+    v510 --> v513
+    v510 --> v512
+    v510 --> v511
+    v510 --> v201
+    v201 --> v515
+    v515 --> v517
+    v515 --> v516
+    v515 --> v201
+    v1 --> v529
+    v155 --> v529
+    v201 --> v529
+    v529 --> v533
+    v529 --> v532
+    v529 --> v531
+    v529 --> v530
+    v529 --> v201
+    v201 --> v538
+    v1 --> v544
+    v201 --> v544
+    v544 --> v558
+    v544 --> v561
+    v1 --> v547
+    v201 --> v547
+    v547 --> v557
+    v547 --> v556
+    v547 --> v555
+    v547 --> v554
+    v547 --> v553
+    v547 --> v552
+    v547 --> v551
+    v547 --> v550
+    v547 --> v549
+    v547 --> v548
+    v547 --> v558
+    v547 --> v561
+    v558 --> v565
+    v568 --> v201
+    v575 --> v576
+    v1 --> v576
+    v201 --> v576
+    v576 --> v579
+    v576 --> v578
+    v576 --> v577
+    v576 --> v201
+    v576 --> v561
+    v1 --> v586
+    v201 --> v586
+    v586 --> v591
+    v586 --> v590
+    v586 --> v589
+    v586 --> v588
+    v586 --> v587
+    v586 --> v561
+    v561 --> v595
+    v201 --> v604
+    v201 --> v607
+    v1 --> v633
+    v10 --> v633
+    v152 --> v633
+    v155 --> v633
+    v169 --> v633
+    v201 --> v633
+    v633 --> v196
+    v633 --> v201
+    v633 --> v643
+    v201 --> v637
+    v196 --> v642
+    v152 --> v647
+    v196 --> v647
+    v647 --> v196
+    v647 --> v201
+    v657 --> v659
+    v658 --> v659
+    v643 --> v659
+    v659 --> v662
+    v659 --> v661
+    v659 --> v660
+    v659 --> v643
+    v659 --> v669
+    v643 --> v664
+    v664 --> v666
+    v664 --> v665
+    v664 --> v643
+    v664 --> v669
+    v643 --> v668
+    v669 --> v671
+    v692 --> v694
+    v693 --> v694
+    v1 --> v694
+    v152 --> v694
+    v155 --> v694
+    v196 --> v694
+    v694 --> v196
+    v694 --> v201
+    v1 --> v697
+    v10 --> v697
+    v152 --> v697
+    v155 --> v697
+    v169 --> v697
+    v196 --> v697
+    v697 --> v698
+    v697 --> v201
+    v697 --> v699
+    v699 --> v705
+    v741 --> v746
+    v742 --> v746
+    v743 --> v746
+    v744 --> v746
+    v745 --> v746
+    v699 --> v746
+    v746 --> v201
+    v747 --> v748
+    v196 --> v748
+    v699 --> v748
+    v748 --> v809
+    v748 --> v808
+    v748 --> v807
+    v748 --> v806
+    v748 --> v805
+    v748 --> v804
+    v748 --> v803
+    v748 --> v802
+    v748 --> v801
+    v748 --> v800
+    v748 --> v799
+    v748 --> v798
+    v748 --> v797
+    v748 --> v796
+    v748 --> v795
+    v748 --> v794
+    v748 --> v793
+    v748 --> v792
+    v748 --> v791
+    v748 --> v790
+    v748 --> v789
+    v748 --> v788
+    v748 --> v787
+    v748 --> v786
+    v748 --> v785
+    v748 --> v784
+    v748 --> v783
+    v748 --> v782
+    v748 --> v781
+    v748 --> v780
+    v748 --> v779
+    v748 --> v778
+    v748 --> v777
+    v748 --> v776
+    v748 --> v775
+    v748 --> v774
+    v748 --> v773
+    v748 --> v772
+    v748 --> v771
+    v748 --> v770
+    v748 --> v769
+    v748 --> v768
+    v748 --> v767
+    v748 --> v766
+    v748 --> v765
+    v748 --> v764
+    v748 --> v763
+    v748 --> v762
+    v748 --> v761
+    v748 --> v760
+    v748 --> v759
+    v748 --> v758
+    v748 --> v757
+    v748 --> v756
+    v748 --> v755
+    v748 --> v754
+    v748 --> v753
+    v748 --> v752
+    v748 --> v751
+    v748 --> v750
+    v748 --> v749
+    v748 --> v201
+    v810 --> v811
+    v196 --> v811
+    v699 --> v811
+    v811 --> v873
+    v811 --> v872
+    v811 --> v871
+    v811 --> v870
+    v811 --> v869
+    v811 --> v868
+    v811 --> v867
+    v811 --> v866
+    v811 --> v865
+    v811 --> v864
+    v811 --> v863
+    v811 --> v862
+    v811 --> v861
+    v811 --> v860
+    v811 --> v859
+    v811 --> v858
+    v811 --> v857
+    v811 --> v856
+    v811 --> v855
+    v811 --> v854
+    v811 --> v853
+    v811 --> v852
+    v811 --> v851
+    v811 --> v850
+    v811 --> v849
+    v811 --> v848
+    v811 --> v847
+    v811 --> v846
+    v811 --> v845
+    v811 --> v844
+    v811 --> v843
+    v811 --> v842
+    v811 --> v841
+    v811 --> v840
+    v811 --> v839
+    v811 --> v838
+    v811 --> v837
+    v811 --> v836
+    v811 --> v835
+    v811 --> v834
+    v811 --> v833
+    v811 --> v832
+    v811 --> v831
+    v811 --> v830
+    v811 --> v829
+    v811 --> v828
+    v811 --> v827
+    v811 --> v826
+    v811 --> v825
+    v811 --> v824
+    v811 --> v823
+    v811 --> v822
+    v811 --> v821
+    v811 --> v820
+    v811 --> v819
+    v811 --> v818
+    v811 --> v817
+    v811 --> v816
+    v811 --> v815
+    v811 --> v814
+    v811 --> v813
+    v811 --> v812
+    v811 --> v201
+    v874 --> v875
+    v196 --> v875
+    v699 --> v875
+    v875 --> v937
+    v875 --> v936
+    v875 --> v935
+    v875 --> v934
+    v875 --> v933
+    v875 --> v932
+    v875 --> v931
+    v875 --> v930
+    v875 --> v929
+    v875 --> v928
+    v875 --> v927
+    v875 --> v926
+    v875 --> v925
+    v875 --> v924
+    v875 --> v923
+    v875 --> v922
+    v875 --> v921
+    v875 --> v920
+    v875 --> v919
+    v875 --> v918
+    v875 --> v917
+    v875 --> v916
+    v875 --> v915
+    v875 --> v914
+    v875 --> v913
+    v875 --> v912
+    v875 --> v911
+    v875 --> v910
+    v875 --> v909
+    v875 --> v908
+    v875 --> v907
+    v875 --> v906
+    v875 --> v905
+    v875 --> v904
+    v875 --> v903
+    v875 --> v902
+    v875 --> v901
+    v875 --> v900
+    v875 --> v899
+    v875 --> v898
+    v875 --> v897
+    v875 --> v896
+    v875 --> v895
+    v875 --> v894
+    v875 --> v893
+    v875 --> v892
+    v875 --> v891
+    v875 --> v890
+    v875 --> v889
+    v875 --> v888
+    v875 --> v887
+    v875 --> v886
+    v875 --> v885
+    v875 --> v884
+    v875 --> v883
+    v875 --> v882
+    v875 --> v881
+    v875 --> v880
+    v875 --> v879
+    v875 --> v878
+    v875 --> v877
+    v875 --> v876
+    v875 --> v201
+    v699 --> v953
+    v964 --> v201
+    v967 --> v979
+    v970 --> v201
+    v975 --> v201
+    v982 --> v984
+    v983 --> v984
+    v201 --> v984
+    v979 --> v984
+    v980 --> v984
+    v981 --> v984
+    v984 --> v987
+    v984 --> v986
+    v984 --> v985
+    v984 --> v988
+    v988 --> v990
+
+</pre>
+<script type="module">
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+  mermaid.initialize({ startOnLoad: true, maxTextSize: Number.MAX_SAFE_INTEGER, maxEdges: Number.MAX_SAFE_INTEGER });
+</script>
+</body>
+</html>
